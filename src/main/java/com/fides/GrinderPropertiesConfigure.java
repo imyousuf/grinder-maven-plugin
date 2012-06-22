@@ -364,7 +364,7 @@ public abstract class GrinderPropertiesConfigure extends AbstractMojo
 			Map.Entry<String, String> pair;
 			while (iterator.hasNext()) {						
 				pair = iterator.next();
-				if (pair.getValue() != null) {
+				if (pair.getValue() != null && pair.getKey().startsWith("grinder.")) {
 					propertiesPlugin.setProperty(pair.getKey(), pair.getValue());
 				}
 			}
