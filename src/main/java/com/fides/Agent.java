@@ -29,6 +29,11 @@ public class Agent extends GrinderPropertiesConfigure
 		super();
 	}
 
+	@Override
+	protected String getJythonVersion() {		
+		return GrinderPropertiesConfigure.GRINDER_JYTHON_VERSION;
+	}
+	
 	public void execute()
 	{
 		try {
@@ -73,11 +78,5 @@ public class Agent extends GrinderPropertiesConfigure
 		} catch (GrinderException e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	protected String getJythonVersion() {
-		
-		return GrinderPropertiesConfigure.GRINDER_JYTHON_VERSION;
 	}
 }

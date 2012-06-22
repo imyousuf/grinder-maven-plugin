@@ -156,6 +156,10 @@ public class Report extends GrinderPropertiesConfigure
 		return jar_directory + File.separator + JYTHON_DIR;
 	}
 
+	@Override
+	protected String getJythonVersion() {		
+		return GrinderPropertiesConfigure.GRINDER_ANALYZER_JYTHON_VERSION;
+	}
 	
 	public void execute()
 	{	
@@ -202,12 +206,6 @@ public class Report extends GrinderPropertiesConfigure
 		}	
 		
 		jythonInterpreter();
-	}
-
-	@Override
-	protected String getJythonVersion() {
-		
-		return GrinderPropertiesConfigure.GRINDER_ANALYZER_JYTHON_VERSION;
 	}
 }
 

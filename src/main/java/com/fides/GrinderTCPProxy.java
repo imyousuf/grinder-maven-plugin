@@ -529,28 +529,20 @@ public class GrinderTCPProxy extends GrinderPropertiesConfigure
 			return m_filterContainer;
 		}
 	}
+	
+	@Override
+	protected String getJythonVersion() {		
+		return GrinderPropertiesConfigure.GRINDER_JYTHON_VERSION;
+	}
 
 	public void execute() 
 	{
 		String[] args = new String[2];
 		
-		try {
-			super.execute();
-		} catch (MojoExecutionException e) {
-			e.printStackTrace();
-		} catch (MojoFailureException e) {
-			e.printStackTrace();
-		}
-		
 		args[0] = "-console";
 		args[1] = "-http";
+
 		TCPProxy.main(args);
-	}
-	
-	@Override
-	protected String getJythonVersion() {
-		
-		return GrinderPropertiesConfigure.GRINDER_JYTHON_VERSION;
 	}
 }
 

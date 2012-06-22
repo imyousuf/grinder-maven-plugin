@@ -61,7 +61,12 @@ public class GrinderConsole extends GrinderPropertiesConfigure
 			m_consoleFoundation.run();
 		}
 	}
-    
+    	
+	@Override
+	protected String getJythonVersion() {		
+		return GrinderPropertiesConfigure.GRINDER_JYTHON_VERSION;
+	}
+
 	public void execute()
 	{
 		final Console console;
@@ -77,11 +82,5 @@ public class GrinderConsole extends GrinderPropertiesConfigure
 		} catch (MojoFailureException e) {
 			e.printStackTrace();
 		} 		
-	}
-	
-	@Override
-	protected String getJythonVersion() {
-		
-		return GrinderPropertiesConfigure.GRINDER_JYTHON_VERSION;
 	}
 }
