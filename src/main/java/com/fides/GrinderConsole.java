@@ -11,7 +11,6 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-
 package com.fides;
 
 import net.grinder.common.GrinderException;
@@ -33,68 +32,69 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Giuseppe Iacono
  */
-public class GrinderConsole extends GrinderPropertiesConfigure
-{
-	private final Resources resources = new ResourcesImplementation(
-		      "net.grinder.console.common.resources.Console");
-	
-	private final Logger logger =
-		      LoggerFactory.getLogger(resources.getString("shortTitle"));
+public class GrinderConsole extends GrinderPropertiesConfigure {
 
-	public Resources getResources() {
-		return resources;
-	}
-	
-	public Logger getLogger() {
-		return logger;
-	}
-	
-	public final static class Console extends AbstractMainClass 
-	{
-		private static final String USAGE = "  java "
-				+ Console.class.getName()
-				+ " [-headless]"
-				+ "\n"
-				+ "\n  -headless                    Don't use a graphical user interface.";
+  private final Resources resources = new ResourcesImplementation(
+      "net.grinder.console.common.resources.Console");
+  /**
+   * List of Plugin dependencies
+   *
+   * @parameter expression="false"
+   */
+  private boolean headless;
+  private final Logger logger =
+                       LoggerFactory.getLogger(resources.getString("shortTitle"));
 
-		private final ConsoleFoundation m_consoleFoundation;
+  public Resources getResources() {
+    return resources;
+  }
 
-		private Console(Resources resources, Logger logger)
-				throws GrinderException 
-		{
-			super(logger, USAGE);
+  public Logger getLogger() {
+    return logger;
+  }
 
-			Class<? extends ConsoleFoundation.UI> ui = ConsoleUI.class;
+  public final static class Console extends AbstractMainClass {
 
-			m_consoleFoundation = new ConsoleFoundation(resources, logger);
-			m_consoleFoundation.createUI(ui);
-		}
+    private static final String USAGE = "  java " +
+        Console.class.getName() +
+        " [-headless]" +
+        "\n" +
+        "\n  -headless                    Don't use a graphical user interface.";
+    private final ConsoleFoundation m_consoleFoundation;
 
-		private void run() 
-		{
-			m_consoleFoundation.run();
-		}
-	}
-    	
-	@Override
-	protected String getJythonVersion() {		
-		return GrinderPropertiesConfigure.GRINDER_JYTHON_VERSION;
-	}
+    private Console(Resources resources, Logger logger, boolean headless)
+        throws GrinderException {
+      super(logger, USAGE);
 
-	public void execute()
-	{
-		final Console console;
-		try {
-			super.execute();
-			console = new Console(resources, logger);
-			console.run();
-		} catch (GrinderException e) {
-			logger.error("Could not initialise", e);
-		    System.exit(2);
-		} catch (MojoExecutionException e) {
-			e.printStackTrace();
-		} catch (MojoFailureException e) {
-			e.printStackTrace();
-		} 		
-	}
+      m_consoleFoundation = new ConsoleFoundation(resources, logger, headless);
+    }
+
+    private void run() {
+      m_consoleFoundation.run();
+    }
+  }
+
+  @Override
+  protected String getJythonVersion() {
+    return GrinderPropertiesConfigure.GRINDER_JYTHON_VERSION;
+  }
+
+  public void execute() {
+    final Console console;
+    try {
+      super.execute();
+      console = new Console(resources, logger, headless);
+      console.run();
+    }
+    catch (GrinderException e) {
+      logger.error("Could not initialise", e);
+      System.exit(2);
+    }
+    catch (MojoExecutionException e) {
+      e.printStackTrace();
+    }
+    catch (MojoFailureException e) {
+      e.printStackTrace();
+    }
+  }
 }

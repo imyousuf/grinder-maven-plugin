@@ -1,0 +1,12 @@
+private/
+catalog.xml
+profiles.xml
+*.log
+generated
+target
+*.properties
+*~
+
+.settings/
+.project
+.classpath

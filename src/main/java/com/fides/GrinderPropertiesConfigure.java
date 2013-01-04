@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
 public abstract class GrinderPropertiesConfigure extends AbstractMojo
 {
 	// Jython version for The Grinder
-	public static final String GRINDER_JYTHON_VERSION = "2.2.1";
+	public static final String GRINDER_JYTHON_VERSION = "2.5.2";
 
 	// Jython version for The Grinder Analyzer
 	public static final String GRINDER_ANALYZER_JYTHON_VERSION = "2.5.2";	
@@ -235,9 +235,14 @@ public abstract class GrinderPropertiesConfigure extends AbstractMojo
 
 		Artifact a = null;
 		Collection artifacts = pluginArtifacts;
-		StringBuffer pluginDependencies = new StringBuffer();
-		String grinderJar = null;
-				
+		StringBuilder pluginDependencies = new StringBuilder();
+
+    for (Iterator i = artifacts.iterator();  i.hasNext();) {
+			a = (Artifact) i.next();
+      logger.debug("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+      System.out.println("GroupId: " + a.getGroupId() + "\nArtifactId: "
+						+ a.getArtifactId() + "\nVersino: " + a.getVersion());
+    }
 		for (Iterator i = artifacts.iterator();  i.hasNext();) {
 			a = (Artifact) i.next();
 			logger.debug("------------------------------------------------------------");
@@ -248,21 +253,13 @@ public abstract class GrinderPropertiesConfigure extends AbstractMojo
 				System.out.println("GroupId: " + a.getGroupId() + "\nArtifactId: "
 						+ a.getArtifactId() + "\nVersino: " + a.getVersion());
 				try {
-					grinderJar = MavenUtilities.getPluginAbsolutePath(
-														a.getGroupId(), 
-														a.getArtifactId(), 
-														a.getVersion());
-					grinderJar = MavenUtilities.normalizePath(grinderJar);
-					pluginDependencies.append(grinderJar);
+          
+					pluginDependencies.append(a.getFile().getAbsolutePath());
 					if (i.hasNext()) {
 						pluginDependencies.append(File.pathSeparator);
 					}
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (XmlPullParserException e) {
-					e.printStackTrace();
+				} catch (Exception ex) {
+					logger.warn(ex.getMessage(), ex);
 				}				
 			}
 		}

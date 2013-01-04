@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * Run agent process.
  * 
  * @goal agent
+ * @requiresDependencyResolution system
  * 
  * @author Giuseppe Iacono
  */
