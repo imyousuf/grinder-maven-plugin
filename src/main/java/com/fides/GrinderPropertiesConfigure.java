@@ -32,7 +32,6 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,10 +44,10 @@ import org.slf4j.LoggerFactory;
 public abstract class GrinderPropertiesConfigure extends AbstractMojo
 {
 	// Jython version for The Grinder
-	public static final String GRINDER_JYTHON_VERSION = "2.5.2";
+	public static final String GRINDER_JYTHON_VERSION = "2.5.3";
 
 	// Jython version for The Grinder Analyzer
-	public static final String GRINDER_ANALYZER_JYTHON_VERSION = "2.5.2";	
+	public static final String GRINDER_ANALYZER_JYTHON_VERSION = "2.5.3";
 	
 	// default agent
 	private static final boolean DEFAULT_DAEMON_OPTION = false;						

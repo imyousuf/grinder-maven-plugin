@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * Run agent process.
  * 
  * @goal agent
- * @requiresDependencyResolution system
  * 
  * @author Giuseppe Iacono
  */
@@ -58,9 +57,11 @@ public class Agent extends GrinderPropertiesConfigure
 		} catch (MojoFailureException e1) {
 			e1.printStackTrace();
 		}		
-				
+		  System.out.println("Agent Classpath: " + System.getProperty("java.class.path"));
+      System.setProperty("java.class.path", getPropertiesPlugin().getProperty("grinder.jvm.classpath"));
+
 		AgentDaemon daemon_agent;			
-		AgentImplementation default_agent;	
+		net.grinder.engine.agent.Agent default_agent;
 		try {
 			if (isDaemonOption()) {
 				if(logger.isDebugEnabled()){
