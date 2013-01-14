@@ -236,12 +236,7 @@ public abstract class GrinderPropertiesConfigure extends AbstractMojo
 		Collection artifacts = pluginArtifacts;
 		StringBuilder pluginDependencies = new StringBuilder();
 
-    for (Iterator i = artifacts.iterator();  i.hasNext();) {
-			a = (Artifact) i.next();
-      logger.debug("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-      System.out.println("GroupId: " + a.getGroupId() + "\nArtifactId: "
-						+ a.getArtifactId() + "\nVersino: " + a.getVersion());
-    }
+    logger.debug("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		for (Iterator i = artifacts.iterator();  i.hasNext();) {
 			a = (Artifact) i.next();
 			logger.debug("------------------------------------------------------------");
@@ -250,17 +245,20 @@ public abstract class GrinderPropertiesConfigure extends AbstractMojo
 					 || (a.getArtifactId().contains("jython") && a.getVersion().equals(getJythonVersion())))) {
 				
 				System.out.println("GroupId: " + a.getGroupId() + "\nArtifactId: "
-						+ a.getArtifactId() + "\nVersino: " + a.getVersion());
-				try {
-          
-					pluginDependencies.append(a.getFile().getAbsolutePath());
-					if (i.hasNext()) {
-						pluginDependencies.append(File.pathSeparator);
-					}
-				} catch (Exception ex) {
-					logger.warn(ex.getMessage(), ex);
-				}				
-			}
+						+ a.getArtifactId() + "\nVersion: " + a.getVersion() + "\nFile: " 
+            + ((a.getFile() == null)?"NONE":a.getFile().getAbsolutePath()));
+        if (a.getFile() != null) {
+          try {
+            pluginDependencies.append(a.getFile().getAbsolutePath());
+            if (i.hasNext()) {
+              pluginDependencies.append(File.pathSeparator);
+            }
+          }
+          catch (Exception ex) {
+            logger.warn(ex.getMessage(), ex);
+          }
+        }
+      }
 		}
 		
 		propertiesPlugin.setProperty("grinder.jvm.classpath", pluginDependencies.toString());	
